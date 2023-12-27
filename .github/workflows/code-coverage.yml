@@ -1,0 +1,30 @@
+name: Code Coverage
+
+on: 
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  code-coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 14
+
+      - name: Install Dependencies
+        run: npm istall
+
+      - name: Run Tests and Generate Code Coverage
+        run: npm test -- --coverage
+
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
